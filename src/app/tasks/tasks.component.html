@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row">
+    <form class="well" (submit)="addTask($event)">
+      <div class="form-group">
+        <input type="text" autocomplete="off" [(ngModel)]="title" name="title" class="form-control" placeholder="Add a task" />
+      </div>
+    </form>
+  </div>
+
+  <masonry [options]="myOptions">
+    <!-- <masonry-brick class="brick" *ngFor="let brick of bricks">{{brick.title}}</masonry-brick> -->
+    <div class="gutter-sizer"></div>
+    <masonry-brick class="card card-block shadow tile" *ngFor="let task of tasks" [ngClass]="task.color" (click)="selectTask(task)" myHighlight  highlightColor="teal">
+      <i class="fa fa-check-square-o complete" [class.hidden]="!task.complete" (click)="updateStatus(task, $event)" aria-hidden="true"></i>
+      <i class="fa fa-square-o complete" [class.hidden]="task.complete" (click)="updateStatus(task, $event)" aria-hidden="true"></i>
+      <h4 class="card-title">{{ task.title }}</h4>
+    </masonry-brick>
+  </masonry>
+
+
+
+<div *ngIf="selectedTask" class="background container-fluid">
+  <div class="row editor">
+    <div class="col-md-2">
+      <div class="card card-block shadow">
+        <h3>Colors</h3>
+        <ul>
+          <li (click)="setColor('color-1')"><div class="badge color-1"></div></li>
+          <li (click)="setColor('color-2')"><div class="badge color-2"></div></li>
+          <li (click)="setColor('color-3')"><div class="badge color-3"></div></li>
+          <li (click)="setColor('color-4')"><div class="badge color-4"></div></li>
+          <li (click)="setColor('color-5')"><div class="badge color-5"></div></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-8 offset-md-1">
+      <div class="card card-block shadow" [ngClass]="selectedTask.color">
+        <i class="fa fa-check-square-o complete" [class.hidden]="!selectedTask.complete" (click)="updateStatus(selectedTask)" aria-hidden="true"></i>
+        <i class="fa fa-square-o complete" [class.hidden]="selectedTask.complete" (click)="updateStatus(selectedTask)" aria-hidden="true"></i>
+        <span class="close" (click)="unselectTask()">&times;</span>
+        <input type="text" aria-multiline="true"  autocomplete="off" class="card-title" [(ngModel)]="selectedTask.title" name="title"/><br />
+        <!-- <a href="#" class="card-link delete" (click)="deleteTask(selectedTask._id)">Delete</a> -->
+        <a href="#" class="fa fa-times delete" (click)="deleteTask(selectedTask._id)" aria-hidden="true"></a>
+      </div>
+    </div>
+  </div>
+</div>

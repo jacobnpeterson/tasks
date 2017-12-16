@@ -1,6 +1,6 @@
 import { MeanAppPage } from './app.po';
 
-describe('mean-app App', () => {
+describe('tasks App', () => {
   let page: MeanAppPage;
 
   beforeEach(() => {
